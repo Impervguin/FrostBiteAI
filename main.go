@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"./interna/obj_map"
 )
 
 func main()  {
@@ -17,17 +16,17 @@ func main()  {
 	m.player.x = 3
 	m.player.y = 3
 	m.width, m.height = 10, 10
-	m.mat = [][]byte{
-		{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '*', '*', '*', '*', '*', '*', '*', '*', '#'},
-		{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+	m.mat = [][]mapItem{
+		{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+		{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
 	}
 
 	for true {

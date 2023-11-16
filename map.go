@@ -1,4 +1,4 @@
-package map_obj
+package main
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ type Map struct {
 	print_width, print_height int
 	player                    Player
 	objs                      []mapObject
-	mat                       [][]byte
+	mat                       [][]mapItem
 }
 
 func (m Map) print_map() int {
@@ -49,7 +49,7 @@ func (m Map) print_map() int {
 			if (i == center_y && j == center_x) {
 				fmt.Printf("%c", 'P')
 			} else {
-				fmt.Printf("%c", m.mat[i][j])
+				PrintMapItem(m.mat[i][j])
 			}
 		}
 		fmt.Println()
