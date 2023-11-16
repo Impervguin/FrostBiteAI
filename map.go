@@ -51,7 +51,7 @@ func (m Map) print_map() int {
 	for i := ly; i < ry; i++ {
 		for j := lx; j < rx; j++ {
 			if i == center_y && j == center_x {
-				fmt.Printf("%c", 'P')
+				fmt.Printf("%c", '@')
 			} else {
 				PrintMapItem(m.mat[i][j])
 			}

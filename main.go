@@ -1,53 +1,50 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"os/exec"
+
+	"github.com/mattn/go-tty"
 )
 
 func main() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 	m, _ := ReadMapFromFile("./data/maps/map.txt")
-	// m.mat = make([][]char, 10)
-	// for i := 0; i < 10; i++ {
-	// 	m.mat[i] = make([]char, 10)
-	// }
-	m.print_height, m.print_width = 15, 30
+
+	m.print_height, m.print_width = 20, 65
 	m.player.x = 32
 	m.player.y = 20
-	// m.width, m.height = 10, 10
-	// m.mat = [][]mapItem{
-	// 	{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-	// 	{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
-	// }
+
+	tty, err := tty.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer tty.Close()
 
 	for true {
 		m.print_map()
 
-		var a byte
-		fmt.Scanf("%c\n", &a)
+		r, err := tty.ReadRune()
+		if err != nil {
+			log.Fatal(err)
+		}
 		cmd := exec.Command("clear")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
-		if a == 'd' {
-			m.player.x++
+		if r == 'd' {
+			m.PlayerMoveRight()
 		}
-		if a == 's' {
-			m.player.y++
+		if r == 's' {
+			m.PlayerMoveDown()
 		}
-		if a == 'w' {
-			m.player.y--
+		if r == 'w' {
+			m.PlayerMoveUp()
 		}
-		if a == 'a' {
-			m.player.x--
+		if r == 'a' {
+			m.PlayerMoveLeft()
 		}
 
 	}

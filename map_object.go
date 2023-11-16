@@ -9,18 +9,18 @@ type mapObject interface {
 }
 
 type ClueObject struct {
-	x, y int
+	x, y     int
 	filename string
-} 
+}
 
 type CharacterObject struct {
 	characterid int
-	x,y int
+	x, y        int
 	settingfile string
 }
 
 type FinalObject struct {
-	x, y int
+	x, y        int
 	settingfile string
 }
 
@@ -37,13 +37,14 @@ func (final FinalObject) action() {
 }
 
 type mapItem struct {
-	char byte
-	color ColorCode
-	objName string
+	char     byte
+	color    ColorCode
+	objName  string
 	passable bool
 }
 
 var WallItem = mapItem{'#', ColorRed, "Wall", false}
+var ChristItem = mapItem{'$', ColorYellow, "Wall", false}
 var EmptyItem = mapItem{' ', ColorReset, "Empty", true}
 var PathItem = mapItem{'.', ColorReset, "Path", true}
 var DoorItem = mapItem{'0', ColorYellow, "Door", false}
@@ -53,6 +54,8 @@ func GetMapItem(char byte) mapItem {
 	switch char {
 	case '#':
 		return WallItem
+	case '$':
+		return ChristItem
 	case ' ':
 		return EmptyItem
 	case '.':
