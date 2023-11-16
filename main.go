@@ -6,28 +6,28 @@ import (
 	"os/exec"
 )
 
-func main()  {
-	m := Map{}
+func main() {
+	m, _ := ReadMapFromFile("./data/maps/map.txt")
 	// m.mat = make([][]char, 10)
 	// for i := 0; i < 10; i++ {
 	// 	m.mat[i] = make([]char, 10)
 	// }
-	m.print_height, m.print_width = 7, 7
-	m.player.x = 3
-	m.player.y = 3
-	m.width, m.height = 10, 10
-	m.mat = [][]mapItem{
-		{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
-		{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
-	}
+	m.print_height, m.print_width = 5, 10
+	m.player.x = 32
+	m.player.y = 20
+	// m.width, m.height = 10, 10
+	// m.mat = [][]mapItem{
+	// 	{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall},
+	// 	{Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall},
+	// }
 
 	for true {
 		m.print_map()
@@ -37,19 +37,19 @@ func main()  {
 		cmd := exec.Command("clear")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
-		if (a == 'd') {
+		if a == 'd' {
 			m.player.x++
 		}
-		if (a == 's') {
+		if a == 's' {
 			m.player.y++
 		}
-		if (a == 'w') {
+		if a == 'w' {
 			m.player.y--
 		}
-		if (a == 'a') {
+		if a == 'a' {
 			m.player.x--
 		}
-			
+
 	}
 
 }
