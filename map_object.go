@@ -4,6 +4,8 @@ import "fmt"
 
 type mapObject interface {
 	action()
+	get_x() int
+	get_y() int
 }
 
 type ClueObject struct {
