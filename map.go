@@ -28,7 +28,7 @@ func (m Map) print_map() int {
 			lx++
 			rx++
 		}
-		for rx > m.width {
+		for rx >= m.width {
 			rx--
 			lx--
 		}
@@ -42,7 +42,7 @@ func (m Map) print_map() int {
 			ly++
 			ry++
 		}
-		for ry > m.height {
+		for ry >= m.height {
 			ry--
 			ly--
 		}
@@ -87,14 +87,14 @@ func readMapItemMtrFromFile(filename string) ([][]mapItem, int, int, error) {
 			return nil, 0, 0, fmt.Errorf("некорректный формат размера матрицы m")
 		}
 
-		matrix := make([][]mapItem, n)
+		matrix := make([][]mapItem, m)
 		for i, _ := range matrix {
-			matrix[i] = make([]mapItem, m)
+			matrix[i] = make([]mapItem, n)
 		}
 
-		for i := 0; i < n && scanner.Scan(); i++ {
+		for i := 0; i < m && scanner.Scan(); i++ {
 			line := scanner.Text()
-			for j := 0; j < m && j < len(line); j++ {
+			for j := 0; j < n && j < len(line); j++ {
 				matrix[i][j] = GetMapItem(line[j])
 			}
 		}
