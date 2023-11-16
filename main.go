@@ -12,7 +12,7 @@ func main() {
 	// for i := 0; i < 10; i++ {
 	// 	m.mat[i] = make([]char, 10)
 	// }
-	m.print_height, m.print_width = 5, 10
+	m.print_height, m.print_width = 15, 30
 	m.player.x = 32
 	m.player.y = 20
 	// m.width, m.height = 10, 10
