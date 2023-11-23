@@ -8,6 +8,27 @@ type mapObject interface {
 	get_y() int
 }
 
+type TwoSideInterface interface {
+	get_answer(string) string
+	get_init_message() string
+	get_end_message() string
+	is_end() bool
+}
+
+func StartTwoSideInteface(inter TwoSideInterface) {
+	fmt.Println(inter.get_init_message())
+	for (!inter.is_end()) {
+		fmt.Print("Игрок: ")
+		var player_mes string
+		fmt.Scanln((&player_mes))
+		ans := inter.get_answer(player_mes)
+		fmt.Println(ans)
+	}
+	fmt.Println(inter.get_end_message())
+	fmt.Scan()
+
+}
+
 type ClueObject struct {
 	x, y     int
 	filename string
@@ -30,6 +51,14 @@ func (clue ClueObject) action() {
 
 func (character CharacterObject) action() {
 	fmt.Println("Characters are under construction, sorry!")
+}
+
+func (character CharacterObject) get_x() int {
+	return character.x
+}
+
+func (character CharacterObject) get_y() int {
+	return character.y
 }
 
 func (final FinalObject) action() {
