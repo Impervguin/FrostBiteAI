@@ -22,7 +22,14 @@ func (clue clueData) print_message() {
 
 func (clue clueData) print_picture() {
 	for _, row := range clue.ASCII_mtr {
-		fmt.Println(string(row))
+		for _, char := range row {
+			if char == '#' {
+				PrintColorChar(char, ColorRed)
+			} else {
+				fmt.Print(string(char))
+			}
+		}
+		fmt.Println()
 	}
 }
 
