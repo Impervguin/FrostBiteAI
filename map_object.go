@@ -39,33 +39,6 @@ func StartOneSideInteface(inter OneSideInterface) {
 	fmt.Scanln()
 }
 
-type CharacterObject struct {
-	characterid int
-	x, y        int
-	settingfile string
-}
-
-type FinalObject struct {
-	x, y        int
-	settingfile string
-}
-
-func (character CharacterObject) action() {
-	fmt.Println("Characters are under construction, sorry!")
-}
-
-func (character CharacterObject) get_x() int {
-	return character.x
-}
-
-func (character CharacterObject) get_y() int {
-	return character.y
-}
-
-func (final FinalObject) action() {
-	fmt.Println("Final are under construction, sorry!")
-}
-
 type mapItem struct {
 	char     byte
 	color    ColorCode
