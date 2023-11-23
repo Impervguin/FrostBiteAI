@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import {
+	"fmt"
+	"os"
+	"os/exec"
+}
 
 type mapObject interface {
 	action()
@@ -34,9 +38,15 @@ type OneSideInterface interface {
 }
 
 func StartOneSideInteface(inter OneSideInterface) {
-	inter.print_message()
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 	inter.print_picture()
+	inter.print_message()
 	fmt.Scanln()
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
 
 type mapItem struct {
