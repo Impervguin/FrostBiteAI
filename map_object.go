@@ -1,10 +1,10 @@
 package main
 
-import {
+import (
 	"fmt"
 	"os"
 	"os/exec"
-}
+)
 
 type mapObject interface {
 	action()
@@ -30,6 +30,9 @@ func StartTwoSideInteface(inter TwoSideInterface) {
 	}
 	fmt.Println(inter.get_end_message())
 	fmt.Scanln()
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
 
 type OneSideInterface interface {
@@ -44,7 +47,7 @@ func StartOneSideInteface(inter OneSideInterface) {
 	inter.print_picture()
 	inter.print_message()
 	fmt.Scanln()
-	cmd := exec.Command("clear")
+	cmd = exec.Command("clear")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }

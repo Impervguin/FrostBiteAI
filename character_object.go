@@ -25,6 +25,9 @@ type characterData struct {
 
 func (char characterData) get_answer(question string) string {
 	ans, ok := char.Answers[question]
+	if ok && question == "q" {
+		char.Is_end = true
+	}
 	if ok {
 		return ans
 	}
