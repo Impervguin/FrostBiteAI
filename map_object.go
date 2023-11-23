@@ -17,7 +17,7 @@ type TwoSideInterface interface {
 
 func StartTwoSideInteface(inter TwoSideInterface) {
 	fmt.Println(inter.get_init_message())
-	for (!inter.is_end()) {
+	for !inter.is_end() {
 		fmt.Print("Игрок: ")
 		var player_mes string
 		fmt.Scanln((&player_mes))
@@ -25,13 +25,18 @@ func StartTwoSideInteface(inter TwoSideInterface) {
 		fmt.Println(ans)
 	}
 	fmt.Println(inter.get_end_message())
-	fmt.Scan()
-
+	fmt.Scanln()
 }
 
-type ClueObject struct {
-	x, y     int
-	filename string
+type OneSideInterface interface {
+	print_message()
+	print_picture()
+}
+
+func StartOneSideInteface(inter OneSideInterface) {
+	inter.print_message()
+	inter.print_picture()
+	fmt.Scanln()
 }
 
 type CharacterObject struct {
@@ -43,10 +48,6 @@ type CharacterObject struct {
 type FinalObject struct {
 	x, y        int
 	settingfile string
-}
-
-func (clue ClueObject) action() {
-	fmt.Println("Clue objects under construction, sorry!")
 }
 
 func (character CharacterObject) action() {
