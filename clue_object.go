@@ -42,3 +42,11 @@ func (clue ClueObject) action() {
 	}
 	StartOneSideInteface(data)
 }
+
+func (clue ClueObject) get_x() int {
+	return clue.x
+}
+
+func (clue ClueObject) get_y() int {
+	return clue.y
+}
