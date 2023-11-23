@@ -8,3 +8,6 @@ main.exe : main.go map.go map_player.go map_object.go
 
 character_creator.exe : $(Creators)/character_creator.go
 	$(Compiler) $(GoFlags) build -o $@ $^
+
+clue_creator.exe : $(Creators)/clue_creator.go
+	$(Compiler) $(GoFlags) build -o $@ $^
