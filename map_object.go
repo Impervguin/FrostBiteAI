@@ -28,7 +28,7 @@ func StartTwoSideInteface(inter TwoSideInterface) {
 		ans := inter.get_answer(player_mes)
 		fmt.Println(ans)
 	}
-	fmt.Println(inter.get_end_message())
+	fmt.Print(inter.get_end_message())
 	fmt.Scanln()
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout

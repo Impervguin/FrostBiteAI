@@ -1,0 +1,2 @@
+40 8 ./data/characters/barman.json character
+4 20 ./data/clues/rag.json clue

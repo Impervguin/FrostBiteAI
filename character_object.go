@@ -23,18 +23,21 @@ type characterData struct {
 	Is_end      bool
 }
 
-func (char characterData) get_answer(question string) string {
+func (char *characterData) get_answer(question string) string {
+
 	ans, ok := char.Answers[question]
-	if ok && question == "q" {
+	if question == "q" {
 		char.Is_end = true
+		return ""
 	}
+	
 	if ok {
 		return ans
 	}
 	return "Я не знаю что на это ответить."
 }
 
-func (char characterData) get_init_message() string {
+func (char *characterData) get_init_message() string {
 	res := ""
 	for _, str := range char.ASCII_mtr {
 		res += string(str) + "\n"
@@ -43,11 +46,11 @@ func (char characterData) get_init_message() string {
 	return res
 }
 
-func (char characterData) get_end_message() string {
+func (char *characterData) get_end_message() string {
 	return ""
 }
 
-func (char characterData) is_end() bool {
+func (char *characterData) is_end() bool {
 	return char.Is_end
 }
 
@@ -65,7 +68,7 @@ func (character characterObject) action() {
 		return
 	}
 	data.Is_end = false
-	StartTwoSideInteface(data)
+	StartTwoSideInteface(&data)
 }
 
 func (character characterObject) get_x() int {
