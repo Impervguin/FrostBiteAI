@@ -11,3 +11,6 @@ character_creator.exe : $(Creators)/character_creator.go
 
 clue_creator.exe : $(Creators)/clue_creator.go
 	$(Compiler) $(GoFlags) build -o $@ $^
+
+clean :
+	rm -f ./*.exe
