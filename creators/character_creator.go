@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -8,19 +9,21 @@ import (
 )
 
 type characterData struct {
-	ASCII_mtr    [][]byte
-	Name         string
-	Prof         string
+	ASCII_mtr   [][]byte
+	Name        string
+	Prof        string
 	TimeStayed  string
-	Info         string
+	Info        string
 	InitMessage string
-	Answers      map[string]string
+	EndMessage  string
+	Answers     map[string]string
 }
 
 func main() {
+	Scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print("Введите название записываемого файла: ")
-	var jsonname string
-	fmt.Scanln(&jsonname)
+	Scanner.Scan()
+	jsonname := Scanner.Text()
 	
 	JsonFile, err := os.Create(jsonname)
 	if (err != nil) {
@@ -29,13 +32,13 @@ func main() {
 	}
 
 	fmt.Print("Введите имя персонажа: ")
-	var name string
-	fmt.Scanln(&name)
+	Scanner.Scan()
+	name := Scanner.Text()
 
 
 	fmt.Print("Введите имя файла с картинкой персонажа: ")
-	var fname string
-	fmt.Scanln(&fname)
+	Scanner.Scan()
+	fname := Scanner.Text()
 
 	content, err := os.ReadFile(fname)
 	if err != nil {
@@ -56,33 +59,38 @@ func main() {
 	}
 
 	fmt.Print("Введите профессию персонажа: ")
-	var prof string
-	fmt.Scanln(&prof)
+	Scanner.Scan()
+	prof := Scanner.Text()
 
 	fmt.Print("Введите время нахождения персонажа в деревне: ")
-	var time_stayed string
-	fmt.Scanln(&time_stayed)
+	Scanner.Scan()
+	time_stayed := Scanner.Text()
 
 	fmt.Print("Введите начальное сообщение в диалоге персонажа: ")
-	var init string
-	fmt.Scanln(&init)
+	Scanner.Scan()
+	init := Scanner.Text()
+
+	fmt.Print("Введите сообщение персонажа при окончании диалога: ")
+	Scanner.Scan()
+	end := Scanner.Text()
 
 	fmt.Print("Введите информацию о персонаже: ")
-	var info string
-	fmt.Scanln(&info)
+	Scanner.Scan()
+	info := Scanner.Text()
 
 	fmt.Println("Далее введите заготовленные реплики на вопросы персонажа. (Пустая строка - окончание реплик)")
 	m := make(map[string]string)
 	for {
-		var key, val string
 
 		fmt.Print("Введите реплику игрока: ")
-		fmt.Scanln(&key)
+		Scanner.Scan()
+		key := Scanner.Text()
 		if (len(key) == 0) {
 			break
 		}
 		fmt.Print("Введите ответ персонажа: ")
-		fmt.Scanln(&val)
+		Scanner.Scan()
+		val := Scanner.Text()
 		if (len(val) == 0) {
 			break
 		}
@@ -90,7 +98,7 @@ func main() {
 	}
 
 
-	data := characterData{ASCII_mtr:ASCII_mtr, Name:  name, Prof: prof, TimeStayed:  time_stayed, Info: info, InitMessage: init, Answers: m}
+	data := characterData{ASCII_mtr:ASCII_mtr, Name:  name, Prof: prof, TimeStayed:  time_stayed, Info: info, InitMessage: init,EndMessage: end, Answers: m}
 	
 	jsonData, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
