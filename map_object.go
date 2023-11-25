@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"os/exec"
@@ -21,10 +22,11 @@ type TwoSideInterface interface {
 
 func StartTwoSideInteface(inter TwoSideInterface) {
 	fmt.Println(inter.get_init_message())
+	scan := bufio.NewScanner(os.Stdin)
 	for !inter.is_end() {
 		fmt.Print("Игрок: ")
-		var player_mes string
-		fmt.Scanln((&player_mes))
+		scan.Scan()
+		player_mes := scan.Text()
 		ans := inter.get_answer(player_mes)
 		fmt.Println(ans)
 	}

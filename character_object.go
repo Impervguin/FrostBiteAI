@@ -19,6 +19,7 @@ type characterData struct {
 	TimeStayed  string
 	Info        string
 	InitMessage string
+	EndMessage  string
 	Answers     map[string]string
 	Is_end      bool
 }
@@ -47,7 +48,7 @@ func (char *characterData) get_init_message() string {
 }
 
 func (char *characterData) get_end_message() string {
-	return ""
+	return char.EndMessage
 }
 
 func (char *characterData) is_end() bool {
