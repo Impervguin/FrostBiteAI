@@ -10,6 +10,7 @@ type characterObject struct {
 	CharacterID int
 	X, Y        int
 	SettingFile string
+	Messages    *[]map[string]string
 }
 
 type characterData struct {
@@ -31,7 +32,7 @@ func (char *characterData) get_answer(question string) string {
 		char.Is_end = true
 		return ""
 	}
-	
+
 	if ok {
 		return ans
 	}
@@ -80,3 +81,25 @@ func (character characterObject) get_y() int {
 	return character.Y
 }
 
+func Characters_init_message(objs []mapObject) *[]map[string]string {
+	res_str := "Твои роли:\n"
+	data := characterData{}
+	for _, obj := range objs {
+		if c_obj, ok := obj.(*characterObject); ok {
+			content, err := os.ReadFile(c_obj.SettingFile)
+			if err != nil {
+				fmt.Println("Ошибка чтения файла:", err)
+				return nil
+			}
+			err = json.Unmarshal(content, &data)
+			if err != nil {
+				fmt.Println("Ошибка разбора JSON:", err)
+				return nil
+			}
+			res_str += fmt.Sprintf("%s - %s - Время пребывания в деревне: %s - %s\n", data.Name, data.Prof, data.TimeStayed, data.Info)
+		}
+	}
+	res_str += "Твоя цель вести диалог со мной отыгрывая одного из этих персонажей, которого я буду выбирать. Когда я буду писать имя персонажа в квадратных скобках начинай его отыгрывать.\n"
+	res := []map[string]string{{"role": "user", "content": res_str}}
+	return &res
+}

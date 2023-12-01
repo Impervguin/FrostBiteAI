@@ -119,7 +119,7 @@ func ReadMapFromFile(filename string) (Map, error) {
 func ReadMapItems(filename string) ([]mapObject, error) {
 	chr_id := 1
 	items := make([]mapObject, 0)
-	content, err := os.ReadFile(filename) 
+	content, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func ReadMapItems(filename string) ([]mapObject, error) {
 	for _, line := range lines {
 		// fmt.Println(line)
 		parts := strings.Split(line, " ")
-		if (len(parts) != 4) {
+		if len(parts) != 4 {
 			return nil, fmt.Errorf("Некорректная строка %s", line)
 		}
 		x, err := strconv.Atoi(parts[0])
@@ -142,11 +142,11 @@ func ReadMapItems(filename string) ([]mapObject, error) {
 		}
 		filepath := parts[2]
 		typ := parts[3]
-		if (typ == "character") {
-			obj := characterObject{chr_id, x, y, filepath}
+		if typ == "character" {
+			obj := characterObject{chr_id, x, y, filepath, nil}
 			items = append(items, &obj)
 			chr_id++
-		} else if (typ == "clue") {
+		} else if typ == "clue" {
 			obj := ClueObject{x, y, filepath}
 			items = append(items, &obj)
 		} else {

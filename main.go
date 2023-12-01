@@ -13,12 +13,12 @@ func main() {
 	cmd.Run()
 	m, _ := ReadMapFromFile("./data/maps/map.txt")
 	items, _ := ReadMapItems("./data/maps/objects.txt")
+	// res := Characters_init_message(items)
 	m.objs = items
 	m.print_height, m.print_width = 20, 65
 	m.player.x = 32
 	m.player.y = 20
 	// fmt.Println(m.objs)
-	
 
 	for true {
 		m.print_map()
