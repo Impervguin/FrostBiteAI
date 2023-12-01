@@ -13,7 +13,14 @@ func main() {
 	cmd.Run()
 	m, _ := ReadMapFromFile("./data/maps/map.txt")
 	items, _ := ReadMapItems("./data/maps/objects.txt")
-	// res := Characters_init_message(items)
+	Characters_init_message(items)
+	// fmt.Println(Send_gpt_message(res))
+	// fmt.Println(Get_gpt_message(res))
+	// *res = append(*res, map[string]string{"role": "user", "content" : "Как прошел твой день, Максимилью?"})
+	// fmt.Println(Send_gpt_message(res))
+	// fmt.Println(Get_gpt_message(res))
+
+
 	m.objs = items
 	m.print_height, m.print_width = 20, 65
 	m.player.x = 32

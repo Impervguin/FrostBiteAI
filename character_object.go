@@ -23,6 +23,7 @@ type characterData struct {
 	EndMessage  string
 	Answers     map[string]string
 	Is_end      bool
+	Messages    *[]map[string]string
 }
 
 func (char *characterData) get_answer(question string) string {
@@ -36,16 +37,36 @@ func (char *characterData) get_answer(question string) string {
 	if ok {
 		return ans
 	}
-	return "Я не знаю что на это ответить."
+
+	Add_user_message(char.Messages, question)
+	err := Send_gpt_message(char.Messages)
+	if (err != nil) {
+		return "Извините, возникла ошибка: " + err.Error()
+	}
+	res, err := Get_gpt_message(char.Messages)
+	if (err != nil) {
+		return "Извините, возникла ошибка: " + err.Error()
+	}
+	return res
 }
 
 func (char *characterData) get_init_message() string {
-	res := ""
-	for _, str := range char.ASCII_mtr {
-		res += string(str) + "\n"
+	command := "[" +  char.Name  +"]"
+	Add_user_message(char.Messages, command)
+	err := Send_gpt_message(char.Messages)
+	if (err != nil) {
+		return "Извините, возникла ошибка: " + err.Error()
 	}
-	res += char.InitMessage
-	return res
+	res, err := Get_gpt_message(char.Messages)
+	if (err != nil) {
+		return "Извините, возникла ошибка: " + err.Error()
+	}
+
+	var picture string = ""
+	for _, line := range char.ASCII_mtr {
+		picture += string(line) + "\n"
+	}
+	return picture + "\n" + res
 }
 
 func (char *characterData) get_end_message() string {
@@ -70,6 +91,7 @@ func (character characterObject) action() {
 		return
 	}
 	data.Is_end = false
+	data.Messages = character.Messages
 	StartTwoSideInteface(&data)
 }
 

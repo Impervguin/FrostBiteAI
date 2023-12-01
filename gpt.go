@@ -14,7 +14,6 @@ var GPT_MODEL   string = "gpt-3.5-turbo"
 var MAX_TOKEN   string = "100"
 
 func Send_gpt_message (messages *[]map[string]string) error {
-	fmt.Println("1")
 	request := map[string][]map[string]string{}
 	request["info"] = []map[string]string{{"model" : GPT_MODEL, "max_token": MAX_TOKEN}}
 	request["messages"] = *messages
@@ -57,4 +56,8 @@ func Get_gpt_message(messages *[]map[string]string) (string, error) {
 	}
 
 	return (*messages)[len(*messages) - 1]["content"], nil	
+}
+
+func Add_user_message(messages *[]map[string]string, mes string) {
+	*messages = append(*messages, map[string]string{"role" : "user", "content" : mes})
 }
