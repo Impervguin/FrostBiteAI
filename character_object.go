@@ -84,8 +84,10 @@ func (character characterObject) get_y() int {
 func Characters_init_message(objs []mapObject) *[]map[string]string {
 	res_str := "Твои роли:\n"
 	data := characterData{}
+	res := []map[string]string{}
 	for _, obj := range objs {
 		if c_obj, ok := obj.(*characterObject); ok {
+			c_obj.Messages = &res
 			content, err := os.ReadFile(c_obj.SettingFile)
 			if err != nil {
 				fmt.Println("Ошибка чтения файла:", err)
@@ -100,6 +102,6 @@ func Characters_init_message(objs []mapObject) *[]map[string]string {
 		}
 	}
 	res_str += "Твоя цель вести диалог со мной отыгрывая одного из этих персонажей, которого я буду выбирать. Когда я буду писать имя персонажа в квадратных скобках начинай его отыгрывать.\n"
-	res := []map[string]string{{"role": "user", "content": res_str}}
+	res = append(res, map[string]string{"role": "user", "content": res_str})
 	return &res
 }
