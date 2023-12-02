@@ -9,10 +9,10 @@ app.config['SECRET_KEY'] = 'Han6some_pe1verts'
 I = 0
 
 PROVIDERS = [
+    g4f.Provider.FakeGpt,
     g4f.Provider.GptGo,
     # g4f.Provider.ChatBase,
     g4f.Provider.ChatgptX,
-    g4f.Provider.FakeGpt,
     g4f.Provider.FreeGpt,
     g4f.Provider.GPTalk,
     g4f.Provider.GptForLove,
