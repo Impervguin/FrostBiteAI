@@ -13,6 +13,7 @@ var GPT_ADDRESS string = "http://127.0.0.1:8080/message"
 var GPT_MODEL   string = "gpt-3.5-turbo"
 var MAX_TOKEN   string = "100"
 
+
 func Send_gpt_message (messages *[]map[string]string) error {
 	request := map[string][]map[string]string{}
 	request["info"] = []map[string]string{{"model" : GPT_MODEL, "max_token": MAX_TOKEN}}
@@ -29,6 +30,7 @@ func Send_gpt_message (messages *[]map[string]string) error {
 	if err != nil {
         return err
     }
+
 	defer response.Body.Close()
 
 	var data map[string]string
@@ -42,6 +44,10 @@ func Send_gpt_message (messages *[]map[string]string) error {
 	json.Unmarshal(st, &data);
 	// fmt.Println(st)
 	// fmt.Println(data)
+	if err, ok := data["error"]; ok {
+		return fmt.Errorf(err)
+	}
+
 	*messages = append(*messages, data)
 	return nil
 }
