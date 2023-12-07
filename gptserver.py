@@ -8,6 +8,8 @@ app.config['SECRET_KEY'] = 'Han6some_pe1verts'
 
 I = 0
 
+MAX_TRIES_COUNT = 10
+
 PROVIDERS = [
     g4f.Provider.FakeGpt,
     g4f.Provider.GptGo,
@@ -21,24 +23,52 @@ PROVIDERS = [
 ]
 
 
+def create_error(errstr : str):
+    return json.dumps({"error" : errstr})
+
+def check_message_data(data : dict) -> tuple:
+    if "messages" not in data.keys():
+        return 1, "Error: No messages in request"
+
+    if not isinstance(data["messages"], list) or len(data["messages"]) == 0:
+        return 2, "Error: Not correct format of messages array"
+
+    for mess in data["messages"]:
+        if "role" not in mess.keys() or "content" not in mess.keys():
+            return 3, f"Error: Not correct format in message: {mess}"
+    
+    return 0, "ok"
+
+
 @app.route('/message', methods=['POST'])
 def get_message():
     global I
-    data = flask.request.json
-    # return data
-    # print(data)
-    while True:
+    
+    tries = 0
+
+    if not flask.request.is_json:
+        return create_error("Error: request doesn't have json form.")
+    
+    data = flask.request.json  
+    err = check_message_data(data)
+    if err[0]:
+        return create_error(err[1])
+
+    
+    while tries < MAX_TRIES_COUNT:
         try:
             response = g4f.ChatCompletion.create(
-                model=data["info"][0]["model"],
+                model="gpt-3.5-turbo",
                 provider= PROVIDERS[I],
                 messages=data["messages"],
             )
-            print(PROVIDERS[I])
             break
-        except BaseException as e:
+        except BaseException:
+            print(f"Provider failed: {PROVIDERS[I]}")
             I = (I + 1) % len(PROVIDERS)
-    print(response)
+            tries += 1
+    if tries == MAX_TRIES_COUNT:
+        return create_error("Error: couldn't find any server")
     json_resp = {'role' : 'assistant', 'content' : response}
     return json.dumps(json_resp)
 
