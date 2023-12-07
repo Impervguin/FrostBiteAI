@@ -7,4 +7,4 @@
 49 56 ./data/characters/artist.json character
 15 60 ./data/characters/blacksmith.json character
 15 61 ./data/characters/blacksmith.json character
-20 49 None final
+20 50 None final

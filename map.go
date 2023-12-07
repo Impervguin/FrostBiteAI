@@ -143,9 +143,22 @@ func ReadMapItems(filename string) ([]mapObject, error) {
 		filepath := parts[2]
 		typ := parts[3]
 		if typ == "character" {
-			obj := characterObject{chr_id, x, y, filepath, nil}
+			var id int = chr_id
+			for _, v := range items {
+				if c, ok := v.(*characterObject); ok {
+					// fmt.Println(*c)
+					if (c.SettingFile == filepath) {
+						// fmt.Println(*c)
+						id = c.CharacterID
+						break
+					}	
+				}
+			}
+			obj := characterObject{id, x, y, filepath, nil}
 			items = append(items, &obj)
-			chr_id++
+			if (id == chr_id) {
+				chr_id++
+			}
 		} else if typ == "clue" {
 			obj := ClueObject{x, y, filepath}
 			items = append(items, &obj)
