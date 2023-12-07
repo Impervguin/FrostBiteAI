@@ -40,15 +40,15 @@ func (char *characterData) get_answer(question string) string {
 	if ok {
 		return name_prefix + ans
 	}
-	
+
 	Add_user_message(char.Messages, question)
 	err := Send_gpt_message(char.Messages)
-	if (err != nil) {
+	if err != nil {
 		return name_prefix + char.ErrMessage
 	}
 
 	res, err := Get_gpt_message(char.Messages)
-	if (err != nil) {
+	if err != nil {
 		return name_prefix + char.ErrMessage
 	}
 
@@ -62,14 +62,14 @@ func (char *characterData) get_init_message() string {
 		picture += string(line) + "\n"
 	}
 
-	command := "[" +  char.Name  +"]"
+	command := "[" + char.Name + "]"
 	Add_user_message(char.Messages, command)
 	err := Send_gpt_message(char.Messages)
-	if (err != nil) {
+	if err != nil {
 		return picture + "\n" + char.InitMessage
 	}
 	res, err := Get_gpt_message(char.Messages)
-	if (err != nil) {
+	if err != nil {
 		return picture + "\n" + char.InitMessage
 	}
 
@@ -85,7 +85,6 @@ func (char *characterData) is_end() bool {
 }
 
 func (character characterObject) action() int {
-	fmt.Println("aadasdwefavfqwfvqa\n\n\n\n\n\n\n\n\n\n\n\n")
 	data := characterData{}
 	content, err := os.ReadFile(character.SettingFile)
 	if err != nil {
@@ -100,7 +99,7 @@ func (character characterObject) action() int {
 	}
 	data.Is_end = false
 	data.Messages = character.Messages
-	
+
 	StartTwoSideInteface(&data)
 	return 0
 }
