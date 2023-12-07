@@ -22,6 +22,7 @@ type characterData struct {
 	InitMessage string
 	EndMessage  string
 	ErrMessage  string
+	IsKiller    bool
 	Answers     map[string]string
 	Is_end      bool
 	Messages    *[]map[string]string

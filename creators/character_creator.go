@@ -17,6 +17,7 @@ type characterData struct {
 	InitMessage string
 	EndMessage  string
 	ErrMessage  string
+	IsKiller    bool
 	Answers     map[string]string
 }
 
@@ -83,6 +84,15 @@ func main() {
 	Scanner.Scan()
 	errmes := Scanner.Text()
 
+	fmt.Print("Является ли персонаж убийцей(Да/Нет): ")
+	Scanner.Scan()
+	killerstr := Scanner.Text()
+	killer := false
+	if (killerstr == "Да") {
+		killer = true
+	}
+		
+
 	fmt.Println("Далее введите заготовленные реплики на вопросы персонажа. (Пустая строка - окончание реплик)")
 	m := make(map[string]string)
 	for {
@@ -103,7 +113,7 @@ func main() {
 	}
 
 
-	data := characterData{ASCII_mtr:ASCII_mtr, Name:  name, Prof: prof, TimeStayed:  time_stayed, Info: info, InitMessage: init,EndMessage: end, Answers: m, ErrMessage: errmes}
+	data := characterData{ASCII_mtr:ASCII_mtr, Name:  name, Prof: prof, TimeStayed:  time_stayed, Info: info, InitMessage: init,EndMessage: end, Answers: m, ErrMessage: errmes, IsKiller: killer}
 	
 	jsonData, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
