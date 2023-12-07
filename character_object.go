@@ -84,22 +84,25 @@ func (char *characterData) is_end() bool {
 	return char.Is_end
 }
 
-func (character characterObject) action() {
+func (character characterObject) action() int {
+	fmt.Println("aadasdwefavfqwfvqa\n\n\n\n\n\n\n\n\n\n\n\n")
 	data := characterData{}
 	content, err := os.ReadFile(character.SettingFile)
 	if err != nil {
 		fmt.Println("Ошибка чтения файла:", err)
-		return
+		return 0
 	}
 
 	err = json.Unmarshal(content, &data)
 	if err != nil {
 		fmt.Println("Ошибка разбора JSON:", err)
-		return
+		return 0
 	}
 	data.Is_end = false
 	data.Messages = character.Messages
+	
 	StartTwoSideInteface(&data)
+	return 0
 }
 
 func (character characterObject) get_x() int {

@@ -149,6 +149,10 @@ func ReadMapItems(filename string) ([]mapObject, error) {
 		} else if typ == "clue" {
 			obj := ClueObject{x, y, filepath}
 			items = append(items, &obj)
+		} else if typ == "final" {
+			obj := FinalObject{X: x, Y: y}
+			fmt.Println(obj)
+			items = append(items, &obj)
 		} else {
 			return nil, fmt.Errorf("Некорректный тип %s", typ)
 		}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 
@@ -14,6 +15,9 @@ func main() {
 	m, _ := ReadMapFromFile("./data/maps/map.txt")
 	items, _ := ReadMapItems("./data/maps/objects.txt")
 	Characters_init_message(items)
+	m.objs = items
+	// fmt.Println(items)
+	InitFinalObject(&m.objs)
 	// fmt.Println(Send_gpt_message(res))
 	// fmt.Println(Get_gpt_message(res))
 	// *res = append(*res, map[string]string{"role": "user", "content" : "Как прошел твой день, Максимилью?"})
@@ -21,13 +25,22 @@ func main() {
 	// fmt.Println(Get_gpt_message(res))
 
 
-	m.objs = items
+
 	m.print_height, m.print_width = 20, 65
 	m.player.x = 32
 	m.player.y = 20
 	// fmt.Println(m.objs)
 	GameStart()
-	for true {
+	var ans int = 0
+	for ans == 0 {
+		for _, v := range m.objs {
+			if c, ok := v.(*characterObject); ok {
+				fmt.Println(*c)
+			}
+
+		}
+		fmt.Println(m.objs)
+		fmt.Println(m.player)
 		m.print_map()
 		tty, _ := tty.Open()
 		r, _ := tty.ReadRune()
@@ -36,18 +49,17 @@ func main() {
 		cmd.Stdout = os.Stdout
 		cmd.Run()
 		if r == 'd' {
-			m.PlayerMoveRight()
+			ans, _ = m.PlayerMoveRight()
 		}
 		if r == 's' {
-			m.PlayerMoveDown()
+			ans, _ = m.PlayerMoveDown()
 		}
 		if r == 'w' {
-			m.PlayerMoveUp()
+			ans, _ = m.PlayerMoveUp()
 		}
 		if r == 'a' {
-			m.PlayerMoveLeft()
+			ans, _ = m.PlayerMoveLeft()
 		}
-
 	}
-
+	GameFinal(ans, &m.objs)
 }

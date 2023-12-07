@@ -33,11 +33,11 @@ func (clue clueData) print_picture() {
 	}
 }
 
-func (clue ClueObject) action() {
+func (clue ClueObject) action() int {
 	content, err := os.ReadFile(clue.filename)
 	if err != nil {
 		fmt.Println("Ошибка чтения файла:", err)
-		return
+		return 0
 	}
 
 	var data clueData
@@ -45,9 +45,10 @@ func (clue ClueObject) action() {
 	err = json.Unmarshal(content, &data)
 	if err != nil {
 		fmt.Println("Ошибка разбора JSON:", err)
-		return
+		return 0
 	}
 	StartOneSideInteface(data)
+	return 0
 }
 
 func (clue ClueObject) get_x() int {
