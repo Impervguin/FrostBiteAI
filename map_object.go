@@ -8,7 +8,7 @@ import (
 )
 
 type mapObject interface {
-	action()
+	action() int
 	get_x() int
 	get_y() int
 }
@@ -23,12 +23,14 @@ type TwoSideInterface interface {
 func StartTwoSideInteface(inter TwoSideInterface) {
 	fmt.Println(inter.get_init_message())
 	scan := bufio.NewScanner(os.Stdin)
-	for !inter.is_end() {
+	nend := true
+	for nend {
 		fmt.Print("Игрок: ")
 		scan.Scan()
 		player_mes := scan.Text()
 		ans := inter.get_answer(player_mes)
 		fmt.Println(ans)
+		nend = inter.is_end()
 	}
 	fmt.Print(inter.get_end_message())
 	fmt.Scanln()

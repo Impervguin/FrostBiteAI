@@ -41,4 +41,8 @@ func GameStart() {
 	fmt.Println(START_MESSAGE);
 	fmt.Println("Нажмите enter, чтобы продолжить...")
 	fmt.Scanln();
+
+	cmd = exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
