@@ -21,12 +21,14 @@ type characterData struct {
 	Info        string
 	InitMessage string
 	EndMessage  string
+	ErrMessage  string
 	Answers     map[string]string
 	Is_end      bool
 	Messages    *[]map[string]string
 }
 
 func (char *characterData) get_answer(question string) string {
+	name_prefix := char.Name + ": "
 
 	ans, ok := char.Answers[question]
 	if question == "q" {
@@ -35,37 +37,41 @@ func (char *characterData) get_answer(question string) string {
 	}
 
 	if ok {
-		return ans
+		return name_prefix + ans
 	}
-
+	
 	Add_user_message(char.Messages, question)
 	err := Send_gpt_message(char.Messages)
 	if (err != nil) {
-		return "Извините, возникла ошибка: " + err.Error()
+		return name_prefix + char.ErrMessage
 	}
+
 	res, err := Get_gpt_message(char.Messages)
 	if (err != nil) {
-		return "Извините, возникла ошибка: " + err.Error()
+		return name_prefix + char.ErrMessage
 	}
-	return res
+
+	return name_prefix + res
 }
 
 func (char *characterData) get_init_message() string {
-	command := "[" +  char.Name  +"]"
-	Add_user_message(char.Messages, command)
-	err := Send_gpt_message(char.Messages)
-	if (err != nil) {
-		return "Извините, возникла ошибка: " + err.Error()
-	}
-	res, err := Get_gpt_message(char.Messages)
-	if (err != nil) {
-		return "Извините, возникла ошибка: " + err.Error()
-	}
 
 	var picture string = ""
 	for _, line := range char.ASCII_mtr {
 		picture += string(line) + "\n"
 	}
+
+	command := "[" +  char.Name  +"]"
+	Add_user_message(char.Messages, command)
+	err := Send_gpt_message(char.Messages)
+	if (err != nil) {
+		return picture + "\n" + char.InitMessage
+	}
+	res, err := Get_gpt_message(char.Messages)
+	if (err != nil) {
+		return picture + "\n" + char.InitMessage
+	}
+
 	return picture + "\n" + res
 }
 

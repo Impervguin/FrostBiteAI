@@ -16,6 +16,7 @@ type characterData struct {
 	Info        string
 	InitMessage string
 	EndMessage  string
+	ErrMessage  string
 	Answers     map[string]string
 }
 
@@ -78,6 +79,10 @@ func main() {
 	Scanner.Scan()
 	info := Scanner.Text()
 
+	fmt.Print("Введите сообщение персонажа при ошибки генерации: ")
+	Scanner.Scan()
+	errmes := Scanner.Text()
+
 	fmt.Println("Далее введите заготовленные реплики на вопросы персонажа. (Пустая строка - окончание реплик)")
 	m := make(map[string]string)
 	for {
@@ -98,7 +103,7 @@ func main() {
 	}
 
 
-	data := characterData{ASCII_mtr:ASCII_mtr, Name:  name, Prof: prof, TimeStayed:  time_stayed, Info: info, InitMessage: init,EndMessage: end, Answers: m}
+	data := characterData{ASCII_mtr:ASCII_mtr, Name:  name, Prof: prof, TimeStayed:  time_stayed, Info: info, InitMessage: init,EndMessage: end, Answers: m, ErrMessage: errmes}
 	
 	jsonData, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
