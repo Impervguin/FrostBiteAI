@@ -26,7 +26,7 @@ func main() {
 	m.player.x = 32
 	m.player.y = 20
 	// fmt.Println(m.objs)
-
+	GameStart()
 	for true {
 		m.print_map()
 		tty, _ := tty.Open()

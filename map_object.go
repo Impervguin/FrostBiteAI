@@ -67,7 +67,6 @@ var EmptyItem = mapItem{' ', ColorReset, "Empty", true}
 var PathItem = mapItem{'.', ColorReset, "Path", true}
 var DoorItem = mapItem{'0', ColorYellow, "Door", false}
 var ClueItem = mapItem{'?', ColorReset, "Clue", false}
-var FenceHorItem = mapItem{'|', ColorRed, "FenceHor", false}
 
 func GetMapItem(char byte) mapItem {
 	switch char {
@@ -83,8 +82,6 @@ func GetMapItem(char byte) mapItem {
 		return DoorItem
 	case '?':
 		return ClueItem
-	case '|'
-		return FenceHorItem
 	default:
 		return mapItem{char, ColorReset, "Item", false}
 	}
