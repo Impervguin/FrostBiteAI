@@ -7,4 +7,7 @@
 49 56 ./data/characters/artist.json character
 15 60 ./data/characters/blacksmith.json character
 15 61 ./data/characters/blacksmith.json character
+77 28 ./data/characters/tailor.json character
+88 38 ./data/characters/barber.json character
+20 15 ./data/characters/witch.json character
 20 50 None final

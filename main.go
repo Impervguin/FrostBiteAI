@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 
@@ -33,14 +32,14 @@ func main() {
 	GameStart()
 	var ans int = 0
 	for ans == 0 {
-		for _, v := range m.objs {
-			if c, ok := v.(*characterObject); ok {
-				fmt.Println(*c)
-			}
+		// for _, v := range m.objs {
+		// 	if c, ok := v.(*characterObject); ok {
+		// 		fmt.Println(*c)
+		// 	}
 
-		}
-		fmt.Println(m.objs)
-		fmt.Println(m.player)
+		// }
+		// fmt.Println(m.objs)
+		// fmt.Println(m.player)
 		m.print_map()
 		tty, _ := tty.Open()
 		r, _ := tty.ReadRune()

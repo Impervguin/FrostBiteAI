@@ -164,7 +164,7 @@ func ReadMapItems(filename string) ([]mapObject, error) {
 			items = append(items, &obj)
 		} else if typ == "final" {
 			obj := FinalObject{X: x, Y: y}
-			fmt.Println(obj)
+			// fmt.Println(obj)
 			items = append(items, &obj)
 		} else {
 			return nil, fmt.Errorf("Некорректный тип %s", typ)

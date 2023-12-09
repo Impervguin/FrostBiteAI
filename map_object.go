@@ -30,7 +30,7 @@ func StartTwoSideInteface(inter TwoSideInterface) {
 		player_mes := scan.Text()
 		ans := inter.get_answer(player_mes)
 		fmt.Println(ans)
-		nend = inter.is_end()
+		nend = !inter.is_end()
 	}
 	fmt.Print(inter.get_end_message())
 	fmt.Scanln()
