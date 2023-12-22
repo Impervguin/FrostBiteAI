@@ -23,8 +23,6 @@ func main() {
 	// fmt.Println(Send_gpt_message(res))
 	// fmt.Println(Get_gpt_message(res))
 
-
-
 	m.print_height, m.print_width = 20, 65
 	m.player.x = 32
 	m.player.y = 20
