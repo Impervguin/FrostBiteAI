@@ -8,42 +8,38 @@ import (
 	"net/http"
 )
 
-
 var GPT_ADDRESS string = "http://127.0.0.1:8080/message"
-var GPT_MODEL   string = "gpt-3.5-turbo"
-var MAX_TOKEN   string = "100"
+var GPT_MODEL string = "gpt-3.5-turbo"
+var MAX_TOKEN string = "100"
 
-
-func Send_gpt_message (messages *[]map[string]string) error {
+func Send_gpt_message(messages *[]map[string]string) error {
 	request := map[string][]map[string]string{}
-	request["info"] = []map[string]string{{"model" : GPT_MODEL, "max_token": MAX_TOKEN}}
+	request["info"] = []map[string]string{{"model": GPT_MODEL, "max_token": MAX_TOKEN}}
 	request["messages"] = *messages
 
 	json_data, err := json.Marshal(request)
 
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
 	response, err := http.Post(GPT_ADDRESS, "application/json", bytes.NewBuffer(json_data))
 
 	if err != nil {
-        return err
-    }
+		return err
+	}
 
 	defer response.Body.Close()
 
 	var data map[string]string
 
-    body, err := io.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	st := []byte(body)
-	json.Unmarshal(st, &data);
-	// fmt.Println(st)
-	// fmt.Println(data)
+	json.Unmarshal(st, &data)
 	if err, ok := data["error"]; ok {
 		return fmt.Errorf(err)
 	}
@@ -57,13 +53,13 @@ func Get_gpt_message(messages *[]map[string]string) (string, error) {
 		return "", fmt.Errorf("Нет сообщений")
 	}
 
-	if (*messages)[len(*messages) - 1]["role"] != "assistant" {
+	if (*messages)[len(*messages)-1]["role"] != "assistant" {
 		return "", fmt.Errorf("Последнее сообщение не бота.")
 	}
 
-	return (*messages)[len(*messages) - 1]["content"], nil	
+	return (*messages)[len(*messages)-1]["content"], nil
 }
 
 func Add_user_message(messages *[]map[string]string, mes string) {
-	*messages = append(*messages, map[string]string{"role" : "user", "content" : mes})
+	*messages = append(*messages, map[string]string{"role": "user", "content": mes})
 }

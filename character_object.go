@@ -6,28 +6,31 @@ import (
 	"os"
 )
 
+// characterObject - структура, представляющая объект персонажа в игре
 type characterObject struct {
-	CharacterID int
-	X, Y        int
-	SettingFile string
-	Messages    *[]map[string]string
+	CharacterID int                  // Идентификатор персонажа
+	X, Y        int                  // Координаты персонажа на игровой карте
+	SettingFile string               // Имя файла с настройками персонажа
+	Messages    *[]map[string]string // Указатель на слайс сообщений для взаимодействия с игроком
 }
 
+// characterData - структура для хранения данных о персонаже
 type characterData struct {
-	ASCII_mtr   [][]byte
-	Name        string
-	Prof        string
-	TimeStayed  string
-	Info        string
-	InitMessage string
-	EndMessage  string
-	ErrMessage  string
-	IsKiller    bool
-	Answers     map[string]string
-	Is_end      bool
-	Messages    *[]map[string]string
+	ASCII_mtr   [][]byte             // Матрица ASCII-арт персонажа
+	Name        string               // Имя персонажа
+	Prof        string               // Профессия персонажа
+	TimeStayed  string               // Время пребывания персонажа в деревне
+	Info        string               // Информация о персонаже
+	InitMessage string               // Начальное сообщение в диалоге персонажа
+	EndMessage  string               // Сообщение при окончании диалога
+	ErrMessage  string               // Сообщение при ошибке генерации
+	IsKiller    bool                 // Является ли персонаж убийцей
+	Answers     map[string]string    // Ответы персонажа на вопросы игрока
+	Is_end      bool                 // Флаг окончания диалога
+	Messages    *[]map[string]string // Указатель на слайс сообщений для взаимодействия с игроком
 }
 
+// get_answer - метод для получения ответа персонажа на вопрос игрока
 func (char *characterData) get_answer(question string) string {
 	name_prefix := char.Name + ": "
 
@@ -55,6 +58,7 @@ func (char *characterData) get_answer(question string) string {
 	return name_prefix + res
 }
 
+// get_init_message - метод для получения начального сообщения персонажа
 func (char *characterData) get_init_message() string {
 
 	var picture string = ""
@@ -76,14 +80,17 @@ func (char *characterData) get_init_message() string {
 	return picture + "\n" + res
 }
 
+// get_end_message - метод для получения сообщения при окончании диалога персонажа
 func (char *characterData) get_end_message() string {
 	return char.EndMessage
 }
 
+// is_end - метод для проверки окончания диалога с персонажем
 func (char *characterData) is_end() bool {
 	return char.Is_end
 }
 
+// action - метод для выполнения действия персонажа
 func (character characterObject) action() int {
 	data := characterData{}
 	content, err := os.ReadFile(character.SettingFile)
@@ -104,14 +111,17 @@ func (character characterObject) action() int {
 	return 0
 }
 
+// get_x - метод для получения координаты X персонажа
 func (character characterObject) get_x() int {
 	return character.X
 }
 
+// get_y - метод для получения координаты Y персонажа
 func (character characterObject) get_y() int {
 	return character.Y
 }
 
+// Characters_init_message - функция для инициализации сообщений персонажей
 func Characters_init_message(objs []mapObject) *[]map[string]string {
 	res_str := "Твои роли:\n"
 	data := characterData{}

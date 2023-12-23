@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// WIN_TEXT содержит ASCII-арт для победителя.
 var WIN_TEXT string = `
                                    .''.       
        .''.      .        *''*    :_\/_:     . 
@@ -19,6 +20,7 @@ var WIN_TEXT string = `
         *
 `
 
+// LOSER_TEXT содержит ASCII-арт для проигравшего.
 var LOSER_TEXT string = `
 ⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⡰⡆⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠠⣞⣟⣹⢧⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⡾⢛⢻⣷⠀⠀⠀⠀⠀
@@ -47,13 +49,13 @@ var LOSER_TEXT string = `
 ⠀⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣈⣙⢸⣉⡍⠛⠙⠛⠛⢻⡙⡏⢡⢒⣼⣉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 `
 
-
-
+// GameFinal завершает игру и выводит результаты в зависимости от данных персонажа.
 func GameFinal(id int, objs *[]mapObject) error {
-	// fmt.Println("Вфывц")
+	// Инициализация переменной char для хранения данных о персонаже.
 	var char characterObject
+
+	// Поиск персонажа по ID в переданных объектах.
 	for _, v := range *objs {
-		// fmt.Println(v)
 		if c, ok := v.(*characterObject); ok {
 			if c.CharacterID == id {
 				char = *c
@@ -62,19 +64,22 @@ func GameFinal(id int, objs *[]mapObject) error {
 		}
 	}
 
+	// Инициализация переменной data для хранения данных персонажа из файла.
 	data := characterData{}
+
+	// Чтение содержимого файла с настройками персонажа.
 	content, err := os.ReadFile(char.SettingFile)
 	if err != nil {
 		return fmt.Errorf("Ошибка чтения файла")
 	}
-	// fmt.Println(err)
+
+	// Разбор содержимого файла как JSON и сохранение данных в переменной data.
 	err = json.Unmarshal(content, &data)
-	// fmt.Println(err)
 	if err != nil {
 		return fmt.Errorf("Ошибка разбора JSON")
 	}
 
-	// fmt.Println(data)
+	// Проверка, является ли персонаж убийцей, и вывод соответствующего сообщения.
 	if data.IsKiller {
 		fmt.Println(WIN_TEXT)
 		fmt.Println("Вы Разгадали это дело!", data.Name, "- убийца!")
@@ -82,5 +87,7 @@ func GameFinal(id int, objs *[]mapObject) error {
 		fmt.Println(LOSER_TEXT)
 		fmt.Println("Вы повесили невинного:", data.Name, ", убийства в Лунном зеркальце продолжатся.")
 	}
+
+	// Возвращаем nil, чтобы указать, что функция выполнена без ошибок.
 	return nil
 }

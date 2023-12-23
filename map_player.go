@@ -8,23 +8,23 @@ type Player struct {
 	x, y int
 }
 
-func (m *Map) PlayerMoveUp() (int ,error) {
+func (m *Map) PlayerMoveUp() (int, error) {
 	return m.PlayerMove(m.player.x, m.player.y-1)
 }
 
-func (m *Map) PlayerMoveRight() (int ,error) {
+func (m *Map) PlayerMoveRight() (int, error) {
 	return m.PlayerMove(m.player.x+1, m.player.y)
 }
 
-func (m *Map) PlayerMoveLeft() (int ,error) {
+func (m *Map) PlayerMoveLeft() (int, error) {
 	return m.PlayerMove(m.player.x-1, m.player.y)
 }
 
-func (m *Map) PlayerMoveDown() (int ,error) {
+func (m *Map) PlayerMoveDown() (int, error) {
 	return m.PlayerMove(m.player.x, m.player.y+1)
 }
 
-func (m *Map) PlayerMove(x, y int) (int ,error) {
+func (m *Map) PlayerMove(x, y int) (int, error) {
 	if x < 0 || x >= m.width || y < 0 || y >= m.height {
 		return 0, errors.New("Movement out of bounds.")
 	}
@@ -34,7 +34,6 @@ func (m *Map) PlayerMove(x, y int) (int ,error) {
 		}
 	}
 
-	// fmt.Println(m.mat[y][x])
 	if m.mat[y][x].passable {
 		m.player.x = x
 		m.player.y = y
