@@ -3,7 +3,6 @@ package main
 import (
 	"os"
 	"os/exec"
-
 	"github.com/mattn/go-tty"
 )
 
@@ -15,7 +14,7 @@ func main() {
 	items, _ := ReadMapItems("./data/maps/objects.txt")
 	Characters_init_message(items)
 	m.objs = items
-	// fmt.Println(items)
+	// 	fmt.Println(items)
 	InitFinalObject(&m.objs)
 	// fmt.Println(Send_gpt_message(res))
 	// fmt.Println(Get_gpt_message(res))
